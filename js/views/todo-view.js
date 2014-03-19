@@ -25,17 +25,20 @@ var app = app || {};
 				m('input#toggle-all[type=checkbox]'),
 				m('ul#todo-list', [
 					ctrl.list.map(function(task, index) {
-						return m('li', { class: task.completed() ? 'completed' : ''}, [
-							m('.view', [
-								m('input.toggle[type=checkbox]', {
-									onclick: m.withAttr('checked', task.completed),
-									checked: task.completed()
-								}),
-								m('label', task.title()),
-								m('button.destroy', { onclick: ctrl.remove.bind(ctrl, index)})
-							]),
-							m('input.edit')
-						])
+						if(ctrl.show(index))
+							return m('li', { class: task.completed() ? 'completed' : ''}, [
+								m('.view', [
+									m('input.toggle[type=checkbox]', {
+										onclick: m.withAttr('checked', task.completed),
+										checked: task.completed()
+									}),
+									m('label', task.title()),
+									m('button.destroy', { onclick: ctrl.remove.bind(ctrl, index)})
+								]),
+								m('input.edit')
+							])
+						else
+							return ''
 					})
 				])
 			]),
@@ -44,14 +47,23 @@ var app = app || {};
 					m('strong', ctrl.list.length), ' item' + (ctrl.list.length > 1 ? 's' : '') + ' left'
 				]),
 				m('ul#filters', [
-					m('li.selected', [
-						m('a[href=#/]', 'All')
+					m('li', [
+						m('a[href=#/]', {
+							class: ctrl.filter() == '' ? 'selected' : '',
+							onclick: ctrl.applyFilter.bind(ctrl, '')
+						}, 'All')
 					]),
 					m('li', [
-						m('a[href=#/active]', 'Active')
+						m('a[href=#/active]', {
+							class: ctrl.filter() == 'active' ? 'selected' : '',
+							onclick: ctrl.applyFilter.bind(ctrl, 'active')
+						}, 'Active')
 					]),
 					m('li', [
-						m('a[href=#/completed]', 'Completed')
+						m('a[href=#/completed]', {
+							class: ctrl.filter() == 'completed' ? 'selected' : '',
+							onclick: ctrl.applyFilter.bind(ctrl, 'completed')
+						}, 'Completed')
 					])
 				]),
 				clearCompleted

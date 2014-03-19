@@ -4,8 +4,10 @@ var app = app || {};
 	'use strict';
 
 	app.controller = function() {
-		this.list = new app.TodoList();
-		this.title = m.prop('');
+
+		this.list = new app.TodoList(); // Todo collection
+		this.title = m.prop('');		// Temp title placeholder
+		this.filter = m.prop('');		// TodoList filter
 
 		// Add a Todo 
 		this.add = function(title, e) {
@@ -14,6 +16,16 @@ var app = app || {};
 				this.title('');
 			}
 		};
+
+		// Show/Hide Todo
+		this.show = function(key) {
+			if(this.filter() == 'active')
+				return this.list[key].completed() ? false : true;
+			else if(this.filter() == 'completed')
+				return this.list[key].completed() ? true : false;
+			else
+				return true;
+		}
 
 		// Removing a Todo from the list
 		this.remove = function(key) {
@@ -28,6 +40,7 @@ var app = app || {};
 			}
 		}
 
+		// Total amount of Todos completed
 		this.amountCompleted = function() {
 			var amount = 0;
 			
@@ -37,6 +50,9 @@ var app = app || {};
 
 			return amount;
 		}
+
+		// Applying a filter
+		this.applyFilter = function(value) { this.filter(value); };
 	};
 	
 })();
