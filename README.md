@@ -23,6 +23,10 @@ _If you have other helpful links to share, or find any of the links above no lon
 2. Execute `bower install` in the repo (make sure yo install `npm`)
 3. Open `index.html`!
 
+## TODO
+
+* Proper routing support (still trying to understand Mithril's API, feel free to help :)!)
+
 ## Credit
 
 This TodoMVC application was created by [Jean-Philippe Monette](http://blogue.jpmonette.net/)
