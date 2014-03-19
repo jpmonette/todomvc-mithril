@@ -40,7 +40,9 @@ var app = app || {};
 				])
 			]),
 			m('footer#footer', [
-				m('span#todo-count', m.trust('<strong>' + ctrl.list.length + '</strong> item left')),
+				m('span#todo-count', [
+					m('strong', ctrl.list.length), ' item' + (ctrl.list.length > 1 ? 's' : '') + ' left'
+				]),
 				m('ul#filters', [
 					m('li.selected', [
 						m('a[href=#/]', 'All')
