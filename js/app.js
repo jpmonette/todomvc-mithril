@@ -3,8 +3,8 @@ var ENTER_KEY = 13;
 var ESC_KEY = 27;
 
 (function( window ) {
-	'use strict';
+    'use strict';
 
-	m.module(document.getElementById('todoapp'), app);
+    m.module(document.getElementById('todoapp'), app);
 
 })(window);
