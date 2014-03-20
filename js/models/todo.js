@@ -10,9 +10,9 @@ var app = app || {};
     };
     
     // List of Todos
-	var list = [];
+    var list = [];
     app.TodoList = function() {
-		return list;
-	};
+        return list;
+    };
 
 })();

@@ -6,8 +6,8 @@ var ESC_KEY = 27;
     'use strict';
 
     m.route(document.getElementById('todoapp'), "/", {
-		"/": app,
-		"/:filter": app
-	});
+        "/": app,
+        "/:filter": app
+    });
 
 })(window);

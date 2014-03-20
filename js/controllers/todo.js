@@ -17,19 +17,19 @@ var app = app || {};
             }
         };
 
-		//check whether a todo is visible
-		this.isVisible = function(todo) {
-			if(this.filter() == '')
-				return true;
-			if (this.filter() == 'active')
-				return !todo.completed();
-			if (this.filter() == 'completed')
-				return todo.completed();
-		}
-		
-		this.clearTitle = function() {
-			this.title('')
-		}
+        //check whether a todo is visible
+        this.isVisible = function(todo) {
+            if(this.filter() == '')
+                return true;
+            if (this.filter() == 'active')
+                return !todo.completed();
+            if (this.filter() == 'completed')
+                return todo.completed();
+        }
+        
+        this.clearTitle = function() {
+            this.title('')
+        }
 
         // Removing a Todo from the list
         this.remove = function(key) {
