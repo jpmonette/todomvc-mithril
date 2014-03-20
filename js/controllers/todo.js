@@ -7,24 +7,28 @@ var app = app || {};
 
         this.list = new app.TodoList(); // Todo collection
         this.title = m.prop('');        // Temp title placeholder
-        this.filter = m.prop('');       // TodoList filter
+        this.filter = m.prop(m.route.param('filter') || '');       // TodoList filter
 
         // Add a Todo 
-        this.add = function(title, e) {
-            if(e.keyCode == ENTER_KEY && title()) {
-                this.list.push(new app.Todo({title:title()}));
+        this.add = function(title) {
+            if(title()) {
+                this.list.push(new app.Todo({title: title()}));
                 this.title('');
             }
         };
 
-        // Show/Hide Todo
-        this.show = function(key) {
-            if(this.filter() == 'active')
-                return this.list[key].completed() ? false : true;
-            else if(this.filter() == 'completed')
-                return this.list[key].completed() ? true : false;
-            else
+        //check whether a todo is visible
+        this.isVisible = function(todo) {
+            if(this.filter() == '')
                 return true;
+            if (this.filter() == 'active')
+                return !todo.completed();
+            if (this.filter() == 'completed')
+                return todo.completed();
+        }
+        
+        this.clearTitle = function() {
+            this.title('')
         }
 
         // Removing a Todo from the list
@@ -50,9 +54,6 @@ var app = app || {};
 
             return amount;
         }
-
-        // Applying a filter
-        this.applyFilter = function(value) { this.filter(value); };
     };
     
 })();
