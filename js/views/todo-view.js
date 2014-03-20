@@ -3,43 +3,46 @@ var app = app || {};
 (function () {
     'use strict';
 
+    //view utility
+    app.watchInput = function(ontype, onenter, onescape) {
+        return function(e) {
+            ontype(e)
+            if (e.keyCode == app.ENTER_KEY) onenter()
+            if (e.keyCode == app.ESC_KEY) onescape()
+        }
+    };
+    
+    
+    
     app.view = function(ctrl) {
-
-        var clearCompleted = m()
-
-        if(ctrl.amountCompleted() != 0)
-            clearCompleted = m('button#clear-completed', {
-                onclick: ctrl.clearCompleted.bind(ctrl)
-            }, 'Clear completed (' + ctrl.amountCompleted() + ')')
-
-        return m('#todoapp'), [
+        return [
             m('header#header', [
                 m('h1', 'todos'),
-                m('input#new-todo', { 
-                    placeholder: 'What needs to be done?',
-                    onkeydown: function(e) { m.withAttr('value', ctrl.title)(e); ctrl.add(ctrl.title, e) },
+                m('input#new-todo[placeholder="What needs to be done?"]', { 
+                    onkeypress: app.watchInput(
+						m.withAttr('value', ctrl.title),
+						ctrl.add.bind(ctrl, ctrl.title),
+						ctrl.clearTitle.bind(ctrl)
+					),
                     value: ctrl.title()
                 })
             ]),
             m('section#main', [
                 m('input#toggle-all[type=checkbox]'),
                 m('ul#todo-list', [
-                    ctrl.list.map(function(task, index) {
-                        if(ctrl.show(index))
-                            return m('li', { class: task.completed() ? 'completed' : ''}, [
-                                m('.view', [
-                                    m('input.toggle[type=checkbox]', {
-                                        onclick: m.withAttr('checked', task.completed),
-                                        checked: task.completed()
-                                    }),
-                                    m('label', task.title()),
-                                    m('button.destroy', { onclick: ctrl.remove.bind(ctrl, index)})
-                                ]),
-                                m('input.edit')
-                            ])
-                        else
-                            return ''
-                    })
+                    ctrl.list.filter(ctrl.isVisible.bind(ctrl)).map(function(task, index) {
+						return m('li', { class: task.completed() ? 'completed' : ''}, [
+							m('.view', [
+								m('input.toggle[type=checkbox]', {
+									onclick: m.withAttr('checked', task.completed),
+									checked: task.completed()
+								}),
+								m('label', task.title()),
+								m('button.destroy', { onclick: ctrl.remove.bind(ctrl, index)})
+							]),
+							m('input.edit')
+						])
+                     })
                 ])
             ]),
             m('footer#footer', [
@@ -48,25 +51,27 @@ var app = app || {};
                 ]),
                 m('ul#filters', [
                     m('li', [
-                        m('a[href=#/]', {
-                            class: ctrl.filter() == '' ? 'selected' : '',
-                            onclick: ctrl.applyFilter.bind(ctrl, '')
+                        m('a[href=/]', {
+							config: m.route,
+                            class: ctrl.filter() == '' ? 'selected' : ''
                         }, 'All')
                     ]),
                     m('li', [
-                        m('a[href=#/active]', {
-                            class: ctrl.filter() == 'active' ? 'selected' : '',
-                            onclick: ctrl.applyFilter.bind(ctrl, 'active')
+                        m('a[href=/active]', {
+							config: m.route,
+                            class: ctrl.filter() == 'active' ? 'selected' : ''
                         }, 'Active')
                     ]),
                     m('li', [
-                        m('a[href=#/completed]', {
-                            class: ctrl.filter() == 'completed' ? 'selected' : '',
-                            onclick: ctrl.applyFilter.bind(ctrl, 'completed')
+                        m('a[href=/completed]', {
+							config: m.route,
+                            class: ctrl.filter() == 'completed' ? 'selected' : ''
                         }, 'Completed')
                     ])
                 ]),
-                clearCompleted
+                ctrl.amountCompleted() == 0 ? "" : m('button#clear-completed', {
+					onclick: ctrl.clearCompleted.bind(ctrl)
+				}, 'Clear completed (' + ctrl.amountCompleted() + ')')
             ])
         ];
     };

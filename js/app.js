@@ -5,6 +5,9 @@ var ESC_KEY = 27;
 (function( window ) {
     'use strict';
 
-    m.module(document.getElementById('todoapp'), app);
+    m.route(document.getElementById('todoapp'), "/", {
+		"/": app,
+		"/:filter": app
+	});
 
 })(window);
