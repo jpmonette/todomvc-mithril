@@ -45,7 +45,7 @@ var app = app || {};
                      })
                 ])
             ]),
-            m('footer#footer', [
+            ctrl.list.length == 0 ? '' : m('footer#footer', [
                 m('span#todo-count', [
                     m('strong', ctrl.list.length), ' item' + (ctrl.list.length > 1 ? 's' : '') + ' left'
                 ]),
