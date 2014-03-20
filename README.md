@@ -25,7 +25,9 @@ _If you have other helpful links to share, or find any of the links above no lon
 
 ## TODO
 
-* Proper routing support (still trying to understand Mithril's API, feel free to help :)!)
+* Proper routing support (fixed, waiting for latest Mithril version (v0.1.1))
+* Select all
+* Fix items left behaviour
 
 ## Credit
 
