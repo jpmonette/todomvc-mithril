@@ -69,7 +69,7 @@ var app = app || {};
                         }, 'Completed')
                     ])
                 ]),
-                ctrl.amountCompleted() == 0 ? "" : m('button#clear-completed', {
+                ctrl.amountCompleted() == 0 ? '' : m('button#clear-completed', {
                     onclick: ctrl.clearCompleted.bind(ctrl)
                 }, 'Clear completed (' + ctrl.amountCompleted() + ')')
             ])
