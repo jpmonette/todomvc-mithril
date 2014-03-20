@@ -11,7 +11,7 @@ var app = app || {};
 
         // Add a Todo 
         this.add = function(title) {
-            if(title()) {
+            if(this.title()) {
                 this.list.push(new app.Todo({title: title()}));
                 this.title('');
             }
