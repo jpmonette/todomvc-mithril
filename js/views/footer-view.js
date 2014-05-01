@@ -4,7 +4,7 @@ var app = app || {};
     'use strict';
 
     app.footer = function(ctrl) {
-		return m('footer#footer', [
+        return m('footer#footer', [
             m('span#todo-count', [
                 m('strong', ctrl.list.length), ' item' + (ctrl.list.length > 1 ? 's' : '') + ' left'
             ]),
