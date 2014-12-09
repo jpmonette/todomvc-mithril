@@ -38,9 +38,10 @@ var app = app || {};
 
         // Remove all Todos where Completed == true
         this.clearCompleted = function() {
-            for(var i = 0; i < this.list.length; i++) {
-                if(this.list[i].completed())
-                    this.list.splice(i, 1)
+            for(var i = this.list.length - 1; i >= 0; i--) {
+                if (this.list[i].completed()) {
+                    this.list.splice(i, 1);
+                }
             }
         }
 
