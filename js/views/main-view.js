@@ -31,18 +31,8 @@ var app = app || {};
                 m('input#toggle-all[type=checkbox]'),
                 m('ul#todo-list', [
                     ctrl.list.filter(ctrl.isVisible.bind(ctrl)).map(function(task, index) {
-                        return m('li', { class: task.completed() ? 'completed' : ''}, [
-                            m('.view', [
-                                m('input.toggle[type=checkbox]', {
-                                    onclick: m.withAttr('checked', task.completed),
-                                    checked: task.completed()
-                                }),
-                                m('label', task.title()),
-                                m('button.destroy', { onclick: ctrl.remove.bind(ctrl, index)})
-                            ]),
-                            m('input.edit')
-                        ])
-                     })
+                        return app.single(ctrl, task, index)
+                    })
                 ])
             ]),
             ctrl.list.length == 0 ? '' : app.footer(ctrl)
